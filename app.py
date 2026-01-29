@@ -5,6 +5,22 @@ from prophet.plot import plot_plotly
 import os
 from datetime import datetime
 import json
+import subprocess
+import os
+
+model_files = [
+    f"rent_model_{file_suffix}.pkl",
+    f"forecast_{file_suffix}.csv"
+]
+
+if not all(os.path.exists(f) for f in model_files):
+    st.warning("Models not found on Cloud. Training now (may take 1-2 min)...")
+    result = subprocess.run(["python3", "model_train.py"], capture_output=True, text=True)
+    if result.returncode == 0:
+        st.success("Training complete! Refresh the page.")
+    else:
+        st.error("Training failed:\n" + result.stderr)
+    st.stop()
 
 st.set_page_config(page_title="Tampa & Miami Rent Forecast", page_icon="🏠", layout="wide")
 
