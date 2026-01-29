@@ -1,0 +1,7 @@
+streamlit
+pandas
+prophet
+joblib
+plotly
+numpy
+pandas-datareader
